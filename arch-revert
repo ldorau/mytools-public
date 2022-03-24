@@ -26,7 +26,7 @@ else
 fi
 
 for pkg in ${PKGS}; do
-	pkg_file=$(ls -1 -t /var/cache/pacman/pkg/${pkg}-* | grep -E -e "/${pkg}-[0-9]" | head -n2 | tail -n1)
+	pkg_file=$(ls -1 -t /var/cache/pacman/pkg/${pkg}-* | grep -E -e "/${pkg}-[0-9]" | grep -v 'pkg.tar.zst.sig' | head -n2 | tail -n1)
 	LIST="${pkg_file} ${LIST}"
 done
 
