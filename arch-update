@@ -7,6 +7,7 @@ fi
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 KERNEL="linux,linux-headers,virtualbox-host-modules-arch"
+[ "$PACMAN_IGNORE" != "" ] && KERNEL="$KERNEL,$PACMAN_IGNORE"
 IGNORE="mesa,llvm-libs,clang"
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -25,9 +26,10 @@ fi
 
 [ "$1" == "-n" ] && DRY_RUN=YES && shift
 
+IGNORE=""
 case $1 in
 "-A")
-	IGNORE=""
+	[ "$PACMAN_IGNORE" != "" ] && IGNORE="--ignore $PACMAN_IGNORE"
 	;;
 "-i")
 	IGNORE="--ignore $KERNEL,$IGNORE"
