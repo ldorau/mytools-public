@@ -6,18 +6,16 @@ if ! which pacman > /dev/null 2>&1; then
 fi
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-KERNEL="linux,linux-headers,virtualbox-host-modules-arch"
-[ "$PACMAN_IGNORE" != "" ] && KERNEL="$KERNEL,$PACMAN_IGNORE"
-IGNORE="mesa,llvm-libs,clang"
+IPKGS="linux,linux-headers,virtualbox-host-modules-arch"
+[ "$PACMAN_IGNORE" != "" ] && IPKGS="$IPKGS,$PACMAN_IGNORE"
 # !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 mkdir -p ~/work
 LOG=~/work/arch-update-$(date +%y-%m-%d-%T)-$$.log
 
 if [ "$1" == "-h" ]; then
-	echo "$(basename $0) [-n] [-i|-A|-f|<list_of_packages_to_be_updated>]"
-	echo "   Update all packages except of: $KERNEL"
-	echo "   -i - update all packages except of: $KERNEL, $IGNORE"
+	echo "$(basename $0) [-n] [-A|-f|<list_of_packages_to_be_updated>]"
+	echo "   Update all packages except of: $IPKGS"
 	echo "   -A - update ALL packages"
 	echo "   -f - force AUR update"
 	echo "   -n - dry run"
@@ -31,11 +29,8 @@ case $1 in
 "-A")
 	[ "$PACMAN_IGNORE" != "" ] && IGNORE="--ignore $PACMAN_IGNORE"
 	;;
-"-i")
-	IGNORE="--ignore $KERNEL,$IGNORE"
-	;;
 *)
-	IGNORE="--ignore $KERNEL"
+	IGNORE="--ignore $IPKGS"
 	;;
 esac
 
@@ -59,7 +54,7 @@ if [ -f $LOG ]; then
 		rm -f $LOG
 		echo " Removed empty log"
 	else
-		sudo chown $(whoami).$(whoami) $LOG
+		sudo chown $(whoami):$(whoami) $LOG
 	fi
 fi
 
@@ -123,5 +118,10 @@ elif [ -f $NEW ] && [ $(cat $NEW | wc -l) -gt 0 ]; then
 	cat $NEW
 else
 	echo "No new config files found"
+fi
+
+if [ "$PACMAN_IGNORE" != "" ]; then
+	echo
+	echo "Notice: PACMAN_IGNORE is set, the following packages have been skipped: $PACMAN_IGNORE"
 fi
 
