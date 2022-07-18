@@ -1,0 +1,12 @@
+#!/bin/bash
+
+REPO=$(git-get-current-repo 2>/dev/null)
+[ "$REPO" == "" ] && exit 1
+
+FILE=~/work/$REPO/.git/default-branches
+
+if [ -f $FILE ]; then
+	cat $FILE | grep -v -e '#'
+else
+	echo "master"
+fi

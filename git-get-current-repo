@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# REPO=$(git remote -v | grep -e origin | grep -e fetch | sed 's/.*\///g' | sed 's/.git//g' | cut -d' ' -f1)
+# [ "$REPO" != "" ] && echo $REPO && exit 0
+
+while [ ! -d .git ]; do
+	cd ..
+done
+
+basename $(pwd)
