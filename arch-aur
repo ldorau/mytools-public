@@ -6,11 +6,13 @@ mkdir -p ~/aur
 cd ~/aur
 #[ -d "$1" -a "$2" == "-f" ] && rm -rf ./$1
 
+export MAKEFLAGS="-j$(( $(nproc) - 2 ))"
+
 function remove_build() {
-	DIR=$(find . -name build 2>/dev/null)
+	DIR=$(find /mnt/files/repos/arch-linux/abs/makepkg/$1/ -name build 2>/dev/null)
 	if [ "$DIR" != "" ]; then
-		echo "$ rm -rf $(find . -name build 2>/dev/null)"
-		rm -rf $(find . -name build 2>/dev/null)
+		echo "$ rm -rf $DIR"
+		rm -rf $DIR
 	fi
 }
 
@@ -30,6 +32,7 @@ else
 fi
 
 if [ "$2" != "-f" ]; then
+	set +e
 	makepkg -si
 	if [ $? -ne 0 ]; then
 		echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"

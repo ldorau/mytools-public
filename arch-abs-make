@@ -19,5 +19,5 @@ if [ "$2" != "-f" ]; then
 		makepkg -si --noconfirm --skippgpcheck --nocheck
 	fi
 else
-	makepkg -si --noconfirm --skippgpcheck --nocheck
+	makepkg -si --noconfirm --skippgpcheck --nocheck --skipinteg --skipchecksums
 fi

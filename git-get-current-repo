@@ -5,6 +5,7 @@
 
 while [ ! -d .git ]; do
 	cd ..
+	[ "$(pwd)" == "/" ] && exit 1
 done
 
 basename $(pwd)
