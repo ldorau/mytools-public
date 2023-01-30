@@ -5,8 +5,8 @@ CMD="sudo -E pacman -S $*"
 echo $CMD
 eval $CMD
 if [ $? -ne 0 ]; then
-	echo "Standard installation failed. Trying to install from AUR ..."
-	arch-aur $*
+	echo "Standard installation failed. Try to install from AUR ... (arch-install-aur $*)"
+	exit 1
 fi
 
 if [ -d ~/work ]; then
