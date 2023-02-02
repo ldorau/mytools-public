@@ -43,7 +43,7 @@ case $1 in
 	;;
 esac
 
-CMD="sudo -E pacman $OPT --color always --logfile $LOG $IGNORE"
+CMD="sudo-proxy -E pacman $OPT --color always --logfile $LOG $IGNORE"
 
 echo $CMD
 [ "$DRY_RUN" == "YES" ] && exit 0

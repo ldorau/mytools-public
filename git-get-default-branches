@@ -1,9 +1,9 @@
 #!/bin/bash
 
-REPO=$(git-get-current-repo 2>/dev/null)
-[ "$REPO" == "" ] && exit 1
+DIR=$(git-get-current-repo-dir 2>/dev/null)
+[ "$DIR" == "" ] && exit 1
 
-FILE=~/work/$REPO/.git/default-branches
+FILE=$DIR/.git/default-branches
 if [ -f $FILE ]; then
 	cat $FILE | grep -v -e '#' | cut -d" " -f1
 	exit 0
