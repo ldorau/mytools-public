@@ -1,6 +1,6 @@
 #!/bin/bash
 
-CMD="sudo-proxy -E pacman -S $*"
+CMD="sudo-proxy pacman -S $*"
 
 echo $CMD
 eval $CMD
